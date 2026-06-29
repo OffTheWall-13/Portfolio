@@ -2,7 +2,10 @@ from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import os 
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class Base(DeclarativeBase):    # main model
     __abstract__ = True
@@ -17,9 +20,8 @@ class MessageBase(Base):
     subject: Mapped[str] = mapped_column(String(300))
     main_message: Mapped[str] = mapped_column(String(1000))
 
-
-DB_URL = 'sqlite:///db.sqlite3'
-engine = create_engine(DB_URL, echo=True)
+DB_URL = os.getenv("DATABASE_URL", "sqlite:///db.sqlite3")
+engine = create_engine(DB_URL, echo=False)
 
 
 def create_db_and_tables() -> None:

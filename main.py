@@ -5,11 +5,12 @@ from sqlalchemy import create_engine
 from models import MessageBase, Base
 import uvicorn
 from notifications.notifier import notify
+import os
 
 
 app = FastAPI()
-DB_URL = 'sqlite:///db.sqlite3'
-engine = create_engine(DB_URL, echo=True)
+DB_URL = os.getenv("DATABASE_URL", "sqlite:///db.sqlite3")
+engine = create_engine(DB_URL, echo=False)
 
 Base.metadata.create_all(bind=engine)
 
@@ -34,11 +35,10 @@ def handle_form_submission(name: str = Form(...),
         try:
             session.add(new_message)
             session.commit()
-            notify(name, email, subject, message)
-        except:
+        except Exception:
             session.rollback()
             raise
-        
+    notify(name, email, subject, message)
         
 if __name__ == "__main__":
     uvicorn.run(app)
