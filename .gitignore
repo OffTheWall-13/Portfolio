@@ -1,0 +1,44 @@
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.egg
+*.bak
+*.tmp
+
+# --- Virtual environments ---
+venv/
+ENV/
+env/
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.swp
+
+# --- Databases ---
+*.db
+*.sqlite3
+
+# --- Logs ---
+*.log
+
+# --- Environment variables / secrets ---
+.env
+
+# --- Build / Packaging ---
+dist/
+build/
+*.tar.gz
+*.whl
+
+# --- Telegram bot cache (если есть) ---
+*.session
+*.session-journal
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
