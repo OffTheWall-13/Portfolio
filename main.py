@@ -2,7 +2,7 @@ from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse, HTMLResponse
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy import create_engine
-from models import MessageBase, Base
+from models import MessageBase, Base, create_db_and_tables
 import uvicorn
 from notifications.notifier import notify
 import os
@@ -12,8 +12,7 @@ app = FastAPI()
 DB_URL = os.getenv("DATABASE_URL", "sqlite:///db.sqlite3")
 engine = create_engine(DB_URL, echo=False)
 
-Base.metadata.create_all(bind=engine)
-
+create_db_and_tables
 Session = sessionmaker(engine)
 
 
