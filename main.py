@@ -11,6 +11,7 @@ app = FastAPI()
 DB_URL = 'sqlite:///db.sqlite3'
 engine = create_engine(DB_URL, echo=True)
 
+Base.metadata.create_all(bind=engine)
 
 Session = sessionmaker(engine)
 
