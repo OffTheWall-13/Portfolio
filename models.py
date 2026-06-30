@@ -1,11 +1,8 @@
-from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os 
-from dotenv import load_dotenv
 
-load_dotenv()
 
 class Base(DeclarativeBase):    # main model
     __abstract__ = True

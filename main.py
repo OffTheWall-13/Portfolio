@@ -1,7 +1,8 @@
 from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse, HTMLResponse
+from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
-from models import MessageBase, Base, create_db_and_tables
+from models import MessageBase, Base
 import uvicorn
 from notifications.notifier import notify
 import os
@@ -9,8 +10,7 @@ import os
 
 app = FastAPI()
 DB_URL = os.getenv("DATABASE_URL", "sqlite:///db.sqlite3")
-engine = create_engine(DB_URL, echo=False)
-
+engine = create_engine(DB_URL, echo=True, future=True)
 Session = sessionmaker(engine)
 
 @app.on_event("startup")
@@ -40,5 +40,3 @@ def handle_form_submission(name: str = Form(...),
             raise
     notify(name, email, subject, message)
         
-if __name__ == "__main__":
-    uvicorn.run(app)
