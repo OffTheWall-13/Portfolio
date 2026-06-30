@@ -1,16 +1,18 @@
-from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse, HTMLResponse
-from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
-from models import MessageBase, Base
-import uvicorn
 from notifications.notifier import notify
+from models import MessageBase, Base
+from sqlalchemy import create_engine
+from fastapi import FastAPI, Form
+from dotenv import load_dotenv
+import uvicorn
 import os
 
+load_dotenv()
 
 app = FastAPI()
-DB_URL = os.getenv("DATABASE_URL", "sqlite:///db.sqlite3")
-engine = create_engine(DB_URL, echo=True, future=True)
+DB_URL = os.getenv("DATABASE_URL")
+engine = create_engine(DB_URL, echo=False, future=True)
 Session = sessionmaker(engine)
 
 @app.on_event("startup")
