@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse, HTMLResponse
 from sqlalchemy.orm import Session, sessionmaker
-from sqlalchemy import create_engine
 from models import MessageBase, Base, create_db_and_tables
 import uvicorn
 from notifications.notifier import notify
