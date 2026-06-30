@@ -12,9 +12,11 @@ app = FastAPI()
 DB_URL = os.getenv("DATABASE_URL", "sqlite:///db.sqlite3")
 engine = create_engine(DB_URL, echo=False)
 
-create_db_and_tables
 Session = sessionmaker(engine)
 
+@app.on_event("startup")
+def startup_event():
+    Base.metadata.create_all(engine)
 
 @app.get("/", response_class=HTMLResponse)
 def main_page():
@@ -41,9 +43,3 @@ def handle_form_submission(name: str = Form(...),
         
 if __name__ == "__main__":
     uvicorn.run(app)
-
-
-
-
-
-
